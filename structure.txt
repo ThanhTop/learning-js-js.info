@@ -5,13 +5,49 @@ Comments
 * The modern mode, "use strict"
 'use strict'. when it is located at the top of a script, the whole script works the "modern" way.
 * Variables
-let message;
-A variable
-var instead of let
-the var keyword is almost the same as let. It also declares a variable, but sligntly different
-declaring twice triggers an error
-variable naming 
-constant
-uppercase constants: there is a widespread practice to use constants as aliases for difficult-to-remember values that are known prior to execution.
-Such constants are named using capital letters and underscore.
-captial-named constants are only used as aliases for "hard-code" values
+- let message;
+- A variable
+- var instead of let
+- the var keyword is almost the same as let. It also declares a variable, but sligntly different
+- declaring twice triggers an error
+- variable naming 
+- constant
+- uppercase constants: there is a widespread practice to use constants as aliases for difficult-to-remember values that are known prior to execution.
+- Such constants are named using capital letters and underscore.
+- capital-named constants are only used as aliases for "hard-code" values
+* Date types 
+- A value in JS is always of a certain type. 
+- There are eight basic data types in JS. 
+- we can put any type in a variable. For example, a variable can at one moment be a string and then store a number
+- programming languages that allow such things, such as JS, are called "dynamically types", meaning that there exist data types, but variables are not bound to any of them.
++ Number: the number type represents both integer and floating points numbers.
+Besides regular numbers, there are so-called "special numberic values" which also belong to this data type: Infinity, -Infinity, NaN
+Infinity represents the mathematical Infinity. It is special value that's greater than any number.
+We can get it as a result of division by zero, or just reference it directly
+NaN represents a computational error. It is a result of an incorrect or an undefined mathematical operation. like "not a number"/5
+NaN is sticky. Any further mathematical operation on NaN return NaN like NaN + 1 (there's only one exception to that: NaN ** 0 is 1)
+Mathematical operations are safe, never stop with a fatal error
+Special numberic values formally belong to the "number" type. 
++ BigInt: In JS, the "number" type cannot safely represent integer values larger than 2^53-1
++ String: A string in JS must be surrounded by quotes like let str = 'Hello'
+In JS, there are 3 types of quotes. double quotes, single quotes, backticks
+Backsticks are "extended functionality" quotes. They allow us to embed variables and expressions into a string by wrapping them in ${...}
++ Boolean (logical type)
+ The boolean type has only two values: true and false
+ Boolean values also come as a result of comparisions
++ The "null" value
+ It's just a special value which represents "nothing", "empty", or "value unknown"
+ let age = null => age is unknown
++ The "undefined" value
+The special value undefined also stands apart. It makes a type of its own.
+The meaning of undefined is "value is not assigned"
++ Object and symbol
+ The object type is special
+ All other types are called "primitive" because their values can contain only a single thing (be it a string or a number or whatever). In contrast, objects are used to store collections and more complex entities. 
+ The symbol type is used to create unique identifiers for objects. 
++ The typeof operator 
+
+
+
+
+
