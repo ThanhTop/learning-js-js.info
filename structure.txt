@@ -1,0 +1,17 @@
+* Code Structure
+Statements
+Semicolons
+Comments
+* The modern mode, "use strict"
+'use strict'. when it is located at the top of a script, the whole script works the "modern" way.
+* Variables
+let message;
+A variable
+var instead of let
+the var keyword is almost the same as let. It also declares a variable, but sligntly different
+declaring twice triggers an error
+variable naming 
+constant
+uppercase constants: there is a widespread practice to use constants as aliases for difficult-to-remember values that are known prior to execution.
+Such constants are named using capital letters and underscore.
+captial-named constants are only used as aliases for "hard-code" values
