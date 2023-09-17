@@ -47,7 +47,181 @@ The meaning of undefined is "value is not assigned"
  The symbol type is used to create unique identifiers for objects. 
 + The typeof operator 
 
+* Type conversion
+- Most of the time, operators and functions automatically convert the value given to them to right type.
+For example, alert automatically converts any value to a string to show it. Mathematical operations convert values to numbers.
+There are also cases when we need to explicitly convert a value to expected type.
+- String conversion: String conversion happens when we need the string form of a value.
+For example, alert(value) does it to show the value.
+We can also call the String(value) function to convert a value to string:
+let value = true;
+alert(typeof value); //boolean
+value = String(value);
+alert(typeof value);
+String conversion is most obvious(ro rang). A true becomes "true", null becomes "null", etc.
+- Numberic Conversion
+Numberic conversion in mathematical functions and expressions happens automatically
+for examle: "6" / "2"; //3
+we can use the Number(value) function to explicitly convert a value to a number.
+let str = "123";
+alert(typeof str);
+let num = Number(str);
+alert(typeof num);
+Explicit conversion is usually required when we read a value from a string-based source like a text form but expect a number to be entered.
+If the string is not a valid number, the result of such a conversion is NaN.
+numberic conversion rules:
+undefined: NaN
+null: 0 
+true and false: 1 and 0
+string whitespaces from the start and end are removed.
+- Boolean conversion 
+Boolean conversion is the simplest one. 
+It happens in logical operations (later we'll meet condition tests and other similar things) but can also be performed explicitly with a call to Boolean(value)
+The conversion rule:
+Values that intuitively "empty" like: empty string, null, undefined, and NaN become false
+other values become true.
+
+* Basic operators, maths
+We know many operators from school. They are things like addition +, multiplication *, subtraction -, and so on.
+In this chapter, we'll start with simple operators, then concentrate on JS-specific aspects.
+
+Terms: "unary", "binary" "operand"
+- An operand - is what operators are applied to. For instance, in the multiplication of 5 * 2 there are two operands: the left operand is 5 and the right operand is 2. Sometimes, people call these "arguments" instead of "operands"
+- AN operator is unary if it has a single operand. For example, the unary negation - reverses the sign of a number:
+- An operator is binary if it has two operands. The same minus exists in binary form as well
+-  Math: the following math operators are supported: + - * / % **
+- String concatenation with binary +
+Note that if any of the operands is a string, then the other one is converted to a string too.
+The binary + is the only operator that supports strings in such a way. Other arithmetic operators work only with numbers and always convert their operands to numbers.
+Here’s the demo for subtraction and division:
+alert( 6 - '2' ); // 4
+- Numberic conversion, unary +
+The plus + exists in two forms: the binary form that we used above and the unary form.
+The unary plus or, in other words, the plus operator + applied to a single value, doesn’t do anything to numbers. But if the operand is not a number, the unary plus converts it into a number.
+// No effect on numbers
+let x = 1;
+alert( +x ); // 1
+
+// Converts non-numbers
+alert( +true ); // 1
+alert( +"" );   // 0
+It actually does the same thing as Number(...), but is shorter.
+let apples = "2";
+let oranges = "3";
+// both values converted to numbers before the binary plus
+alert( +apples + +oranges ); // 5
+
+- Operator prescedent
+If an expression has more than one operator, the execution order is defined by their precedence, or, in other words, the default priority order of operators.
+- Assignment
+Let’s note that an assignment = is also an operator. It is listed in the precedence table with the very low priority of 2.
+That’s why, when we assign a variable, like x = 2 * 2 + 1, the calculations are done first and then the = is evaluated, storing the result in x.
+let x = 2 * 2 + 1;
+
+alert( x ); // 5
+Assignment = returns a value
+The fact of = being an operator
+All operators in JavaScript return a value.
+The call x = value writes the value into x and then returns it.
+let a = 1;
+let b = 2;
+
+let c = 3 - (a = b + 1);
+
+alert( a ); // 3
+alert( c ); // 0
+
+Chaining assignments
+let a, b, c;
+
+a = b = c = 2 + 2;
+
+Modify-in-place
+let n = 2;
+n += 5; // now n = 7 (same as n = n + 5)
+n *= 2; // now n = 14 (same as n = n * 2)
+Such operators have the same precedence as a normal assignment, so they run after most other calculations:
+let n = 2;
+
+n *= 3 + 5; // right part evaluated first, same as n *= 8
+
+alert( n ); // 16
+
+Increment/decrement
+Increasing or decreasing a number by one is among the most common numerical operations.
+Increment/decrement can only be applied to variables. Trying to use it on a value like 5++ will give an error.
+the prefix form ++counter increments counter and returns the new value
+the postfix form counter++ also increments counter but returns the old value 
+The operators ++/-- can be used inside expressions as well. Their precedence is higher than most other arithmetical operations.
+let counter = 1;
+alert( 2 * ++counter ); // 4
+Bitwise operators
+AND ( & )
+OR ( | )
+XOR ( ^ )
+NOT ( ~ )
+LEFT SHIFT ( << )
+RIGHT SHIFT ( >> )
+ZERO-FILL RIGHT SHIFT ( >>> )
+
+* Comparisons
+- We know many comparision operators fromm maths.
+Boolean is the result
+All comparision operators return a boolean value.
+alert( 2 > 1 );  // true (correct)
+alert( 2 == 1 ); // false (wrong)
+alert( 2 != 1 ); // true (correct)
+- String comparision
+To see whether a string is greater than another
+The algorithm to compare two strings is simple:
+Compare the first character of both strings.
+If the first character from the first string is greater (or less) than the other string’s, then the first string is greater (or less) than the second. We’re done.
+Otherwise, if both strings’ first characters are the same, compare the second characters the same way.
+Repeat until the end of either string.
+If both strings end at the same length, then they are equal. Otherwise, the longer string is greater.
+- Comparison of different types
+When comparing values of different types, JavaScript converts the values to numbers.
+alert( '2' > 1 ); // true, string '2' becomes a number 2
+alert( '01' == 1 ); // true, string '01' becomes a number 1
+For boolean values, true becomes 1 and false becomes 0.
+Strict equality
+A regular equality check == has a problem. It cannot differentiate 0 from false:
+.alert( 0 == false ); // true
+A strict equality operator === checks the equality without type conversion.
+alert( 0 === false ); // false, because the types are different
+- Comparison with null and undefined
 
 
+* Conditional branching: if, '?'
+The “if” statement
+Boolean conversion
+The if (…) statement evaluates the expression in its parentheses and converts the result to a boolean.
+Conditional operator ‘?’
+let result = condition ? value1 : value2;
+Multiple ‘?’
+let age = prompt('age?', 18);
+let message = (age < 3) ? 'Hi, baby!' :
+  (age < 18) ? 'Hello!' :
+  (age < 100) ? 'Greetings!' :
+  'What an unusual age!';
+alert( message );
+Non-traditional use of ‘?’
+let company = prompt('Which company created JavaScript?', '');
+(company == 'Netscape') ?
+   alert('Right!') : alert('Wrong.');
 
-
+* Logical operators
+There are four logical operators in JavaScript: || (OR), && (AND), ! (NOT), ?? (Nullish Coalescing). Here we cover the first three, the ?? operator is in the next article.
+Although they are called “logical”, they can be applied to values of any type, not only boolean. Their result can also be of any type.
+|| (OR)
+The “OR” operator is represented with two vertical line symbols:
+result = a || b;
+In classical programming, the logical OR is meant to manipulate boolean values only. If any of its arguments are true, it returns true, otherwise it returns false.
+In JavaScript, the operator is a little bit trickier and more powerful. But first, let’s see what happens with boolean values.
+If an operand is not a boolean, it’s converted to a boolean for the evaluation.
+OR "||" finds the first truthy value
+The OR || operator does the following:
+Evaluates operands from left to right.
+For each operand, converts it to boolean. If the result is true, stops and returns the original value of that operand.
+If all operands have been evaluated (i.e. all were false), returns the last operand.
+A value is returned in its original form, without the conversion.
