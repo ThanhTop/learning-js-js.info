@@ -2,8 +2,10 @@
 Statements
 Semicolons
 Comments
+
 * The modern mode, "use strict"
 'use strict'. when it is located at the top of a script, the whole script works the "modern" way.
+
 * Variables
 - let message;
 - A variable
@@ -15,6 +17,7 @@ Comments
 - uppercase constants: there is a widespread practice to use constants as aliases for difficult-to-remember values that are known prior to execution.
 - Such constants are named using capital letters and underscore.
 - capital-named constants are only used as aliases for "hard-code" values
+
 * Date types 
 - A value in JS is always of a certain type. 
 - There are eight basic data types in JS. 
@@ -213,15 +216,253 @@ let company = prompt('Which company created JavaScript?', '');
 * Logical operators
 There are four logical operators in JavaScript: || (OR), && (AND), ! (NOT), ?? (Nullish Coalescing). Here we cover the first three, the ?? operator is in the next article.
 Although they are called “logical”, they can be applied to values of any type, not only boolean. Their result can also be of any type.
+
 || (OR)
 The “OR” operator is represented with two vertical line symbols:
 result = a || b;
 In classical programming, the logical OR is meant to manipulate boolean values only. If any of its arguments are true, it returns true, otherwise it returns false.
 In JavaScript, the operator is a little bit trickier and more powerful. But first, let’s see what happens with boolean values.
 If an operand is not a boolean, it’s converted to a boolean for the evaluation.
-OR "||" finds the first truthy value
+- OR "||" finds the first truthy value
 The OR || operator does the following:
 Evaluates operands from left to right.
 For each operand, converts it to boolean. If the result is true, stops and returns the original value of that operand.
 If all operands have been evaluated (i.e. all were false), returns the last operand.
 A value is returned in its original form, without the conversion.
+In other words, a chain of OR || returns the first truthy value or the last one if no truthy value is found.
+For instance:
+alert( 1 || 0 ); // 1 (1 is truthy)
+alert( null || 1 ); // 1 (1 is the first truthy value)
+alert( null || 0 || 1 ); // 1 (the first truthy value)
+alert( undefined || null || 0 ); // 0 (all falsy, returns the last value)
+This leads to some interesting usage compared to a “pure, classical, boolean-only OR”.
+1. Getting the first truthy value from a list of variables or expressions.
+let firstName = "";
+let lastName = "";
+let nickName = "SuperCoder";
+alert( firstName || lastName || nickName || "Anonymous"); // SuperCoder
+2. Short-circuit evaluation.
+It means that || processes its arguments until the first truthy value is reached, and then the value is returned immediately, without even touching the other argument.
+The importance of this feature becomes obvious if an operand isn’t just a value, but an expression with a side effect, such as a variable assignment or a function call.
+true || alert("not printed");
+false || alert("printed");
+
+&& (AND)
+The AND operator is represented with two ampersands &&:
+In classical programming, AND returns true if both operands are truthy and false otherwise:
+- || AND “&&” finds the first falsy value
+The AND && operator does the following:
+Evaluates operands from left to right.
+For each operand, converts it to a boolean. If the result is false, stops and returns the original value of that operand.
+If all operands have been evaluated (i.e. all were truthy), returns the last operand.
+alert( 1 && 0 ); // 0
+alert( 1 && 5 ); // 5
+alert( null && 5 ); // null
+alert( 0 && "no matter what" ); // 0
+Precedence of AND && is higher than OR ||
+Don’t replace if with || or &&
+Sometimes, people use the AND && operator as a "shorter way to write if".
+let x = 1;
+(x > 0) && alert( 'Greater than zero!' );
+
+! (NOT)
+The boolean NOT operator is represented with an exclamation sign !.
+The syntax is pretty simple:
+result = !value;
+The operator accepts a single argument and does the following:
+alert( !true ); // false
+alert( !0 ); // true
+A double NOT !! is sometimes used for converting a value to boolean type:
+alert( !!"non-empty string" ); // true
+alert( !!null ); // false
+There’s a little more verbose way to do the same thing – a built-in Boolean function:
+alert( Boolean("non-empty string") ); // true
+alert( Boolean(null) ); // false
+The precedence of NOT ! is the highest of all logical operators, so it always executes first, before && or ||.
+
+Nullish coalescing operator '??'
+A recent addition
+The nullish coalescing operator is written as two question marks ??.
+As it treats null and undefined similarly, we’ll use a special term here, in this article. For brevity, we’ll say that a value is “defined” when it’s neither null nor undefined.
+The result of a ?? b is:
+if a is defined, then a,
+if a isn’t defined, then b.
+In other words, ?? returns the first argument if it’s not null/undefined. Otherwise, the second one.
+result = (a !== null && a !== undefined) ? a : b;
+let user;
+alert(user ?? "Anonymous"); // Anonymous (user is undefined)
+let user = "John";
+alert(user ?? "Anonymous"); // John (user is not null/undefined)
+alert(firstName ?? lastName ?? nickName ?? "Anonymous"); // Supercoder
+Comparison with ||
+Historically, the OR || operator was there first. It’s been there since the beginning of JavaScript, so developers were using it for such purposes for a long time.
+The important difference between them is that:
+|| returns the first truthy value.
+?? returns the first defined value.
+let height = 0;
+alert(height || 100); // 100
+alert(height ?? 100); // 0
+Precedence
+The precedence of the ?? operator is the same as ||. They both equal 3 in the MDN table.
+Due to safety reasons, JavaScript forbids using ?? together with && and || operators, unless the precedence is explicitly specified with parentheses.
+
+* Loops: while and for
+- we often need to repeat actions.
+- Loops are a way to repeat the same code multiple times.
+- the "while" loop:
+while (condition) {
+//
+//
+}
+- any expression or variable can be a loop condition, not just comparisons: the condition is evaluated and converted to a boolean by while.
+For instance, a shorter way to write while (i != 0) is while (i):
+If the loop body has a single statement, we can omit the curly braces {…}:
+- the "do...while" loop:
+do {
+  // loop body
+} while (condition);
+- the "for" loop:
+for (begin; condition; step) {
+  // ... loop body ...
+}
+Run begin
+→ (if condition → run body and run step)
+→ (if condition → run body and run step)
+→ (if condition → run body and run step)
+That is, begin executes once, and then it iterates: after each condition test, body and step are executed.
+- Inline variable declaration
+for (let i = 0; i < 3; i++) {
+  alert(i); // 0, 1, 2
+}
+alert(i); // error, no such variable
+Instead of defining a variable, we could use an existing one:
+let i = 0;
+
+for (i = 0; i < 3; i++) { // use an existing variable
+  alert(i); // 0, 1, 2
+}
+alert(i); // 3, visible, because declared outside of the loop
+- Skipping parts
+Any part of for can be skipped.
+for (; i < 3; i++) { // no need for "begin"
+  alert( i ); // 0, 1, 2
+}
+let i = 0;
+for (; i < 3;) {
+  alert( i++ );
+}
+This makes the loop identical to while (i < 3).
+We can actually remove everything, creating an infinite loop:
+for (;;) {
+  // repeats without limits
+}
+- Breaking the loop
+Normally, a loop exits when its condition becomes falsy.
+But we can force the exit at any time using the special break directive.
+-Continue to the next iteration
+The continue directive is a “lighter version” of break. It doesn’t stop the whole loop. Instead, it stops the current iteration and forces the loop to start a new one (if the condition allows).
+- No break/continue to the right side of ‘?’
+- Labels for break/continue
+
+* The "switch" statement 
+A switch statement can replace multiple if checks.
+switch(x) {
+  case 'value1':  // if (x === 'value1')
+    ...
+    [break]
+
+  case 'value2':  // if (x === 'value2')
+    ...
+    [break]
+
+  default:
+    ...
+    [break]
+}
+- Any expression can be a switch/case argument
+let a = "1";
+let b = 0;
+switch (+a) {
+  case b + 1:
+    alert("this runs, because +a is 1, exactly equals b+1");
+    break;
+
+  default:
+    alert("this doesn't run");
+}
+Grouping of “case”
+Type matters
+Let’s emphasize that the equality check is always strict. The values must be of the same type to match.
+let arg = prompt("Enter a value?");
+switch (arg) {
+  case '0':
+  case '1':
+    alert( 'One or zero' );
+    break;
+  case '2':
+    alert( 'Two' );
+    break;
+  case 3:
+    alert( 'Never executes!' );
+    break;
+  default:
+    alert( 'An unknown value' );
+}
+For 0, 1, the first alert runs.
+For 2 the second alert runs.
+But for 3, the result of the prompt is a string "3", which is not strictly equal === to the number 3. So we’ve got a dead code in case 3! The default variant will execute.
+
+* Functions
+- Quite often we need to perform a similar action in many places of the script.
+For example, we need to show a nice-looking message when a visitor logs in, logs out and maybe somewhere else.
+Functions are the main “building blocks” of the program. They allow the code to be called many times without repetition.
+We’ve already seen examples of built-in functions, like alert(message), prompt(message, default) and confirm(question). But we can create functions of our own as well.
+- Function Declaration
+To create a function we can use a function declaration.
+function showMessage() {
+  alert( 'Hello everyone!' );
+}
+The function keyword goes first, then goes the name of the function, then a list of parameters between the parentheses (comma-separated, empty in the example above, we’ll see examples later) and finally the code of the function, also named “the function body”, between curly braces.
+function name(parameter1, parameter2, ... parameterN) {
+ // body
+}
+The call showMessage() executes the code of the function. Here we will see the message two times.
+- Local variables
+function showMessage() {
+  let message = "Hello, I'm JavaScript!"; // local variable
+  alert( message );
+}
+showMessage(); // Hello, I'm JavaScript!
+alert( message ); // <-- Error! The variable is local to the function
+- global variables 
+Variables declared outside of any function, such as the outer userName in the code above, are called global.
+- Parameters
+- Default values
+function showMessage(from, text = "no text given") {
+  alert( from + ": " + text );
+}
+showMessage("Ann"); // Ann: no text given
+- Evaluation of default parameters
+- Default parameters in old JavaScript code
+- Alternative default parameters
+function showMessage(text) {
+  // ...
+  if (text === undefined) { // if the parameter is missing
+    text = 'empty message';
+  }
+  alert(text);
+}
+showMessage(); // empty message
+function showCount(count) {
+  // if count is undefined or null, show "unknown"
+  alert(count ?? "unknown");
+}
+Returning a value
+function sum(a, b) {
+  return a + b;
+}
+let result = sum(1, 2);
+alert( result ); // 3
+- Returning a value
+- A function with an empty return or without it returns undefined
+- Never add a newline between return and the value
